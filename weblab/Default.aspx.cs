@@ -10,9 +10,16 @@ using System.Data;
 using System.Xml;
 using System.Runtime.Serialization.Json;
 using RestJsonRobotitoLabContract;
+//Robotcito Lab Test
+//12 November 2014
+//Coding by Emmanuel Alejandro Can Puc
+
+
 public partial class _Default : System.Web.UI.Page
 {
-    protected void Page_Load(object sender, EventArgs e)
+
+#region "Main function"
+protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
@@ -25,47 +32,10 @@ public partial class _Default : System.Web.UI.Page
 
         }
     }
-    public string GetMessage(string endPoint)
-    {
-        HttpWebRequest request = CreateWebRequest(endPoint);
 
-        using (var response = (HttpWebResponse)request.GetResponse())
-        {
-            var responseValue = string.Empty;
-
-            if (response.StatusCode != HttpStatusCode.OK)
-            {
-                string message = String.Format("POST failed. Received HTTP {0}", response.StatusCode);
-                throw new ApplicationException(message);
-            }
-
-            // grab the response  
-            using (var responseStream = response.GetResponseStream())
-            {
-                using (var reader = new StreamReader(responseStream))
-                {
-                    responseValue = reader.ReadToEnd();
-                }
-            }
-
-            return responseValue;
-        }
-    }
-
-    private HttpWebRequest CreateWebRequest(string endPoint)
-    {
-        var request = (HttpWebRequest)WebRequest.Create(endPoint);
-
-        request.Method = "GET";
-        request.ContentLength = 0;
-        request.ContentType = "text/xml";
-
-        return request;
-    }
-
-
-
-    public static Response MakeRequest(string requestUrl)
+#endregion
+#region "Rest Json Messaging"
+ public static Response MakeRequest(string requestUrl)
     {
         try
         {
@@ -89,11 +59,9 @@ public partial class _Default : System.Web.UI.Page
             return null;
         }
     }
-
-
-
-
-    protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+#endregion
+#region "Grid Functions"
+ protected void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         GridView1.PageIndex = e.NewPageIndex;
         GridView1.DataBind();
@@ -181,22 +149,7 @@ public partial class _Default : System.Web.UI.Page
     
 
     }
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        List<RestJsonRobotitoLabContract.User> res = (List<RestJsonRobotitoLabContract.User>)Session["response"];
-        RestJsonRobotitoLabContract.User u = new User();
-
-        Session["Name"] = "";
-        u.userName = "";
-        res.Insert(0, u);
-
-        Session["response"] = res;
-        GridView1.EditIndex = 0;
-        GridView1.DataBind();
-        btnNew.Visible = false;
-        
-    }
-    protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
         if (GridView1.Rows[0].Cells[1].Text == "&nbsp;")
         {
@@ -213,4 +166,23 @@ public partial class _Default : System.Web.UI.Page
         GridView1.EditIndex = -1;
         GridView1.DataBind();
     }
+ #endregion
+#region "New User"
+ protected void Button1_Click(object sender, EventArgs e)
+    {
+        List<RestJsonRobotitoLabContract.User> res = (List<RestJsonRobotitoLabContract.User>)Session["response"];
+        RestJsonRobotitoLabContract.User u = new User();
+
+        Session["Name"] = "";
+        u.userName = "";
+        res.Insert(0, u);
+
+        Session["response"] = res;
+        GridView1.PageIndex = 0;
+        GridView1.EditIndex = 0;
+        GridView1.DataBind();
+        btnNew.Visible = false;
+        
+    }
+    #endregion
 }

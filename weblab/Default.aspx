@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>REST JSON C#</title>
-    <link href="cssLab.css" rel="stylesheet" type="text/css" />
+    <link href="Css/cssLab.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -20,8 +20,8 @@
 
                 <asp:GridView ID="GridView1" runat="server" AllowPaging="True" 
                     AutoGenerateColumns="False" ondatabinding="GridView1_DataBinding" 
-                    onpageindexchanging="GridView1_PageIndexChanging" 
-                    CssClass="DDGridView" RowStyle-CssClass="td" HeaderStyle-CssClass="th" CellPadding="6"
+                    onpageindexchanging="GridView1_PageIndexChanging"  CssClass ="mGrid"
+                     CellPadding="6"
                     onrowcommand="GridView1_RowCommand" 
                     onrowediting="GridView1_RowEditing" onrowupdated="GridView1_RowUpdated" 
                     onrowupdating="GridView1_RowUpdating" 
@@ -35,7 +35,7 @@
                 </asp:GridView>
             </ContentTemplate>
         </asp:UpdatePanel>
-    
+    <center id="info" style ="padding:10px; border :2px outset navy" >Robotcito Lab Test- EACP Coder</center>
     </div>
     </form>
 </body>
